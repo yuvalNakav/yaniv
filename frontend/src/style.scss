@@ -42,6 +42,7 @@ body {
 #player4 {
   bottom: 0;
 }
+
 .buttons {
   height: 2rem;
   margin: 5px;
@@ -88,5 +89,16 @@ body {
   .sideways {
     width: 100%;
     height: 20%;
+  }
+}
+#slot {
+  position: absolute;
+  height: 30vh;
+  width: 50vh;
+  top: 30vh;
+  right: 35vw;
+  display: flex;
+  .card {
+    width: 50%;
   }
 }

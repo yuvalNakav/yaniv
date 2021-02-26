@@ -88,9 +88,8 @@ class PileDeck extends Deck{
             this.cards.push(Card.cards.pop())
         }
 }
-
+let deck = new Deck();
 function startGame(){
-    const deck = new Deck();
     deck.createDeck()
     const blackJocker = new Jocker("☻", "black", true);
     const redJocker = new Jocker("☻", "red", true);
@@ -107,10 +106,17 @@ function startGame(){
                 newCard.classList.add("sideways");
             }
         }
-        let player3 = document.getElementById("player3")
-        let player2 = document.getElementById("player2")
-        console.log(playerDeck.cards);
-        console.log(deck.cards);
+        // let player3 = document.getElementById("player3")
+        // let player2 = document.getElementById("player2")
     }
+    flipTableDeck();
 }
 startGame()
+function flipTableDeck(){
+    const slot = document.getElementById("slot");
+    let tableDeck = new TableDeck();
+    let newCard = deck.cards[0].createCard();
+    slot.append(newCard);
+    deck.cards.shift();
+    tableDeck.cards = deck.cards;
+}

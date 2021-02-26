@@ -1,0 +1,54 @@
+body {
+  background-image: url(./casinoBackground.jpg);
+}
+
+.deck {
+  border-radius: 10%;
+  border: solid white 3px;
+  background-color: #e71212;
+  margin: 5px;
+}
+
+.vertical {
+  width: 15vw;
+  height: 50vh;
+  position: absolute;
+  height: 70vh;
+  top: 15vh;
+}
+
+.horizontal {
+  position: absolute;
+  width: 40vw;
+  height: 25vh;
+  left: 30vw;
+  right: 30vw;
+}
+
+#player1 {
+  top: 0;
+}
+
+#player2 {
+  right: 0;
+}
+
+#player3 {
+  left: 0;
+}
+
+#player4 {
+  bottom: 0;
+}
+
+.buttons {
+  height: 2rem;
+  margin: 5px;
+  position: absolute;
+  top: 65vh;
+  left: 43vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*# sourceMappingURL=style.css.map */

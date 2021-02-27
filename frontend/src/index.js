@@ -42,8 +42,7 @@ class Card {
 };
 class Jocker extends Card {
     super(rank = "Jocker", suit, isJocker){
-        this.isJocker = isJocker;
-        this.rank = rank;
+        
     }
     createCard(){
             const cardDiv = document.createElement("div"); 
@@ -67,7 +66,6 @@ class Deck{
                 })
             })
         }
-    
     get numberOfCards(){
         return this.cards.length;
     }
@@ -110,10 +108,38 @@ class PileDeck extends Deck{
         createDeck(){
             this.cards.push(Card.cards.pop())
         }
-    }
+}
 const blackJocker = new Jocker("☻", "black", true);
 const redJocker = new Jocker("☻", "red", true);
 let deck = new Deck();
+const playerDeck1 = new PlayerDeck;
+const playerDeck2 = new PlayerDeck;
+const playerDeck3 = new PlayerDeck;
+const playerDeck4 = new PlayerDeck;
+let playerDecks = [playerDeck1, playerDeck2, playerDeck3, playerDeck4];
+const playerDiv = Array.from(document.getElementsByClassName("player"));
+let cardArr = Array.from(document.getElementsByClassName("card"));
+let cardDiv = document.getElementsByClassName("card");
+const tableDiv = document.getElementById("slot");
+const player1 =  document.getElementById("player1");
+const player2 =  document.getElementById("player2");
+const player3 =  document.getElementById("player3");
+const player4 =  document.getElementById("player4");
+const playerArr = [player1, player2, player3, player4];
+for (let playerDeck of playerDecks) {
+    for(let player of playerArr){
+        for (let i = 0; i < player.children.length; i++){
+            playerDeck.cards = player.children;
+        }
+        console.log(player)
+    }
+    console.log(playerDeck)
+};
+// playerDeck1.cards = player1.children;
+// playerDeck2.cards = player2.children;
+// playerDeck3.cards = player3.children;
+// playerDeck4.cards = player4.children;
+
 function startGame(){
     deck.createDeck()
     deck.cards.push(blackJocker, redJocker);
@@ -125,7 +151,7 @@ function startGame(){
             let newCard = deck.cards[0].createCard();
             player.append(newCard);
             playerDeck.cards.push(deck.cards.shift());
-            if(i === 2 || i === 3){
+            if(i === 2 || i === 4){
                 newCard.classList.add("sideways");
             }
         }
@@ -137,28 +163,51 @@ function flipTableDeck(){
     const slot = document.getElementById("slot");
     let tableDeck = new TableDeck();
     let newCard = deck.cards[0].createCard();
-    slot.append(newCard);
     deck.cards.shift();
     tableDeck.cards = deck.cards;
     let nextCard = document.createElement("div");
-    nextCard.classList.add("upside-down");
+    nextCard.id = "upside-down";
     slot.append(nextCard);
+    slot.append(newCard);
+    return tableDeck;
 };
-const playerDiv = Array.from(document.getElementsByClassName("player"));
-let cardArr = Array.from(document.getElementsByClassName("card"));
-let cardDiv = document.getElementsByClassName("card");
-const tableDiv = document.getElementById("slot");
-const player1 =  document.getElementById("player1");
-const player2 =  document.getElementById("player2");
-const player3 =  document.getElementById("player3");
-const player4 =  document.getElementById("player4");
-player1.addEventListener("click", throwCard);
+
+const cardDeck = document.getElementById("upside-down");
+
+playerDiv.forEach(player => {addEventListener("click", throwCard)});
 function throwCard(e){
     let card = e.target;
+    let player = card.parentNode;
     if(card.classList.contains("card")){
-        // if (card.classList[0] === "card") {
-        //     playerDeck.cards.slice()
-        // }
-        console.log(card)
+        if (card.classList[0] === "card") {
+            player.removeChild[e.target]
+            slot.removeChild(slot.children[1]);
+            slot.append(card);
+            if(card.classList.contains("sideways")) card.classList.remove("sideways");
+        }
     }
 }
+
+function getScores(){
+    playerDecks.forEach( playerDeck => {
+        playerDeck.cards.forEach(card => {
+            console.log(card.value)
+        });
+    })
+}
+getScores();
+cardDeck.addEventListener("click", getNewCard);
+function getNewCard(){
+    let card = e.target;
+    let table = card.parentNode;
+}
+
+
+
+/* left to do: 
+    1. get new card each round turn
+    2. throw correct combo in one turn
+    3. write scores for every player (general and per round)
+    4. hide players decks when its not their turn.
+    optional: change diraction to sideways cards
+*/

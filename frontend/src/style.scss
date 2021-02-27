@@ -31,16 +31,16 @@ body {
   right: 30vw;
 }
 #player1 {
-  top: 0;
+  bottom: 0;
 }
 #player2 {
-  right: 0;
-}
-#player3 {
   left: 0;
 }
+#player3 {
+  top: 0;
+}
 #player4 {
-  bottom: 0;
+  right: 0;
 }
 
 .buttons {
@@ -99,7 +99,7 @@ body {
     width: 50%;
   }
 }
-.upside-down {
+#upside-down {
   content: url("cardBack.png");
   width: 50%;
 }

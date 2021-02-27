@@ -106,10 +106,6 @@ body {
   color: red;
 }
 
-.card.jocker {
-  font-size: 1rem;
-}
-
 .card.sideways {
   width: 100%;
   height: 20%;
@@ -120,13 +116,18 @@ body {
   height: 30vh;
   width: 50vh;
   top: 30vh;
-  right: 35vw;
+  right: 40vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
 #slot .card {
+  width: 50%;
+}
+
+.upside-down {
+  content: url("cardBack.png");
   width: 50%;
 }
 /*# sourceMappingURL=style.css.map */

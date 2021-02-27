@@ -13,7 +13,7 @@ body {
 
 .deck {
   border-radius: 0.5rem;
-  border: solid white 3px;
+  border: solid white 5px;
   background-color: rgba(18, 231, 125, 0.301);
   margin: 5px;
 }
@@ -38,16 +38,64 @@ body {
   bottom: 0;
 }
 
+#counter4 {
+  position: absolute;
+  bottom: 25.5vh;
+  background-color: red;
+  color: white;
+  width: auto;
+  font-size: 3rem;
+  border: solid white 5px;
+  border-radius: 0.5rem;
+  left: 49%;
+}
+
 #player2 {
   left: 0;
+}
+
+#counter1 {
+  position: absolute;
+  bottom: 84vh;
+  background-color: red;
+  color: white;
+  width: auto;
+  font-size: 3rem;
+  border: solid white 5px;
+  border-radius: 0.5rem;
+  left: 6%;
 }
 
 #player3 {
   top: 0;
 }
 
+#counter2 {
+  position: absolute;
+  top: 25.5vh;
+  background-color: red;
+  color: white;
+  width: auto;
+  font-size: 3rem;
+  border: solid white 5px;
+  border-radius: 0.5rem;
+  left: 49%;
+}
+
 #player4 {
   right: 0;
+}
+
+#counter3 {
+  position: absolute;
+  bottom: 84vh;
+  background-color: red;
+  color: white;
+  width: auto;
+  font-size: 3rem;
+  border: solid white 5px;
+  border-radius: 0.5rem;
+  right: 6%;
 }
 
 .buttons {
@@ -78,6 +126,10 @@ body {
   -ms-flex-align: center;
   align-items: center;
   font-size: 4rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .card::before {
@@ -112,22 +164,37 @@ body {
 }
 
 #slot {
-  position: absolute;
+  position: relative;
   height: 30vh;
-  width: 50vh;
-  top: 30vh;
-  right: 40vw;
+  max-width: 30%;
+  width: auto;
+  top: 35vh;
+  margin: auto;
+  padding: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
 #slot .card {
+  position: absolute;
+  max-width: 50%;
   width: 50%;
+  right: 0px;
+  bottom: 0;
 }
 
 #upside-down {
   content: url("cardBack.png");
-  width: 50%;
+  max-width: 50%;
+  height: 100%;
+}
+
+#yaniv {
+  display: none;
+}
+
+#assaf {
+  display: none;
 }
 /*# sourceMappingURL=style.css.map */

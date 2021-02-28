@@ -142,22 +142,31 @@ body {
   margin: auto;
   padding: 10px;
   display: flex;
+  align-items: center;
   .card {
     position: absolute;
-    max-width: 50%;
-    width: 50%;
+    max-width: 33%;
+    width: 30%;
     right: 0px;
     bottom: 0;
   }
 }
 #upside-down {
   content: url("cardBack.png");
-  max-width: 50%;
+  max-width: 33%;
   height: 100%;
 }
-#yaniv {
-  display: none;
+#buttons {
+  position: absolute;
+  background-image: url(./casinoBackground.jpg);
+  margin: 0 auto;
+  border: solid 1px white;
+  border-radius: 1rem;
+  left: 38%;
 }
+#yaniv,
 #assaf {
-  display: none;
+  display: block;
+  margin: 1rem;
+  font-size: 3.3rem;
 }

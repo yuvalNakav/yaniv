@@ -89,6 +89,7 @@ class PlayerDeck extends Deck{
     super(){
         this.cards = [];
         this.totalValue = totalValue;
+        this.score = score;
     }
     createDeck(){
         this.cards.push(Card.cards.pop());
@@ -134,6 +135,10 @@ playerDeck4.cards = player4.children;
 const counters = Array.from(document.getElementsByClassName("counter"));
 let turn = 0;
 let pileDeck = new PileDeck;
+for (let playerDeck of playerDecks){
+    playerDeck.score = 0;    
+}
+let yanivBool = false;
 
 function startGame(){
     deck.createDeck()
@@ -214,9 +219,13 @@ function newTurn(){
                             playerArr[turn].style.border = "solid white 5px";
                             playerArr[turn].removeEventListener("click", throwCard);
                             slot.removeEventListener("click", getCard);
-                            turn = turn === 3 ?  0 : turn + 1;
-                            declareYaniv(turn)
-                            newTurn()
+                            declareYaniv(turn);
+                            if(yanivBool){
+                                
+                            }else{
+                                turn = turn === 3 ?  0 : turn + 1;
+                                newTurn()
+                            }
                             
                         }else if(g.target.id = "upside-down"){
                             player.removeChild[e.target];
@@ -235,9 +244,13 @@ function newTurn(){
                             playerArr[turn].style.border = "solid white 5px";
                             playerArr[turn].removeEventListener("click", throwCard);
                             slot.removeEventListener("click", getCard);
-                            turn = turn === 3 ?  0 : turn + 1;
                             declareYaniv(turn)
-                            newTurn();
+                            if(yanivBool){
+                                
+                            }else{
+                                turn = turn === 3 ?  0 : turn + 1;
+                                newTurn()
+                            }
                         }
                     };
                 }
@@ -253,16 +266,43 @@ function newTurn(){
 getScores();
 
 function declareYaniv(turn){
+    const buttonDiv = document.getElementById("buttons")
     const yanivButton = document.getElementById("yaniv")
-    let body = document.getElementsByTagName("body")
-    console.log(yanivButton, body, playerDecks[turn].totalValue)
-    playerDecks[turn].totalValue <= 7 ? yanivButton.style.display = "block" : yanivButton.style.display = "none"
+    
+    if(playerDecks[turn].totalValue <= 7){
+        buttonDiv.style.display = "block"
+        yanivBool = true;
+    }else{
+        buttonDiv.style.display = "none"
+        yanivBool = false;
+    }
+    yanivButton.addEventListener("click", () =>{
+        playerDecks[turn].score = playerDecks[turn].totalValue
+        playerDecks[turn].score -= playerDecks[turn].totalValue 
+        console.log(playerDecks.filter(x => playerDecks[x] !== turn))
+        scoreboard();
+    })
+    return yanivBool;
 }
+function declareAssaf(turn){
 
-if (deck.cards.length === 0){
-    deck.cards = [...pileDeck.cards];
-    console.log(deck.cards)
 }
+function scoreboard(){
+    const scoreboard = document.getElementById("scoreboard");
+    scoreboard.innerHTML = 
+        `SCORE BOARD 
+        <br> Player 1: ${playerDeck1.score}
+        <br> Player 2: ${playerDeck2.score}
+        <br> Player 3: ${playerDeck3.score}
+        <br> Player 4: ${playerDeck4.score}`
+}
+scoreboard()
+
+
+// if (deck.cards.length === 0){
+//     deck.cards = [...pileDeck.cards];
+//     console.log(deck.cards)
+// }
 /* left to do: 
     3. write scores for every player (general)
     

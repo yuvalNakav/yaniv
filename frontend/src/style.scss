@@ -3,6 +3,7 @@
 *::before {
   box-sizing: border-box;
   margin: 0;
+  user-select: none;
 }
 body {
   background-image: url(./casinoBackground.jpg);
@@ -106,7 +107,6 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 4rem;
-  user-select: none;
   ::before {
     content: attr(data-value);
     font-size: 1rem;
@@ -163,10 +163,25 @@ body {
   border: solid 1px white;
   border-radius: 1rem;
   left: 38%;
+  display: none;
 }
 #yaniv,
 #assaf {
   display: block;
   margin: 1rem;
   font-size: 3.3rem;
+}
+#scoreboard {
+  background-color: rgba(18, 231, 125, 0.301);
+  position: absolute;
+  left: 20vw;
+  top: 30vh;
+  width: 11vw;
+  height: 40vh;
+  display: block;
+  border: solid 5px white;
+  border-radius: 0.5rem;
+  font-size: 2.5rem;
+  font-family: cursive;
+  text-align: center;
 }

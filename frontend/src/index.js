@@ -111,6 +111,7 @@ class PileDeck extends Deck{
             this.cards.push(Card.cards.pop())
         }
 }
+
 const blackJocker = new Jocker("☻", "black", true);
 const redJocker = new Jocker("☻", "red", true);
 let deck = new Deck();
@@ -162,13 +163,11 @@ startGame()
 function flipTableDeck(){
     let tableDeck = new TableDeck();
     let newCard = deck.cards[0].createCard();
-    newCard.classList.add("slotCard");
     newCard.id = "slotCard"
     deck.cards.shift();
     tableDeck.cards = deck.cards;
     let nextCard = document.createElement("div");
     nextCard.id = "upside-down";
-    nextCard.classList.add("slotCard")
     slot.append(nextCard);
     slot.append(newCard);
     return tableDeck;
@@ -194,59 +193,54 @@ function newTurn(){
     playerArr[turn].addEventListener("click", throwCard);
     playerArr[turn].style.border = "solid blue 5px";
     function throwCard(e){
-        let selectedCard = e.target;
-        let player = selectedCard.parentNode;
+        const selectedCard = e.target;
+        selectedCard.classList.add("selected")
+        const selectedArr = [...document.querySelectorAll(".selected")];
+        const player = selectedCard.parentNode;
             if(selectedCard.classList.contains("card")){
-                if (selectedCard.style.border !== "solid green 5px") {
+                if (selectedCard.style.border !== "5px solid green") {
                     selectedCard.style.border = "solid green 5px"
                     slot.addEventListener("click", getCard);
                     function getCard(g){
                         if(g.target.id === "slot"){
                             alert("please choose card")
                             getCard();
+
                         } else if(g.target.id === "slotCard"){
                             player.append(g.target)
-                            player.removeChild[e.target]
-                            slot.removeChild[1];
-                            slot.append(selectedCard);
-                            selectedCard.id = "slotCard";
-                             if(turn === 1 || turn === 3){
-                                selectedCard.classList.remove("sideways");
+                            if(turn === 1 || turn === 3){
                                 g.target.classList.add("sideways");
-                            };                            
-                            getScores();
-                            selectedCard.style.border = "solid black 1px";
-                            playerArr[turn].style.border = "solid white 5px";
-                            playerArr[turn].removeEventListener("click", throwCard);
-                            slot.removeEventListener("click", getCard);
-                            declareYaniv(turn);
-                            if(yanivBool){
-                                
-                            }else{
-                                turn = turn === 3 ?  0 : turn + 1;
-                                newTurn()
-                            }
+                            };
+                            g.target.removeAttribute('id');
                             
                         }else if(g.target.id = "upside-down"){
-                            player.removeChild[e.target];
                             let newCard = deck.cards[0].createCard();
                             deck.cards.shift();
                             player.append(newCard);
-                            slot.removeChild[1];
-                            slot.append(selectedCard);
-                            selectedCard.id = "slotCard";
                             if(turn === 1 || turn === 3){
-                                selectedCard.classList.remove("sideways");
                                 newCard.classList.add("sideways");
-                            };
-                            getScores();
-                            selectedCard.style.border = "solid black 1px";
-                            playerArr[turn].style.border = "solid white 5px";
-                            playerArr[turn].removeEventListener("click", throwCard);
-                            slot.removeEventListener("click", getCard);
-                            declareYaniv(turn)
-                            if(yanivBool){
-                                
+                            };    
+                        }
+                        for (let card of selectedArr){
+                            card.id = "slotCard";   
+                            card.style.border = "solid black 1px";
+                            player.removeChild[card]
+                            card.classList.remove("selected")
+                            if(turn === 1 || turn === 3) card.classList.remove("sideways");
+                        }
+                        slot.append(selectedArr[selectedArr.length - 1])
+                        // console.log(selectedArr[selectedArr.length - 1])
+                        slot.removeChild[1];
+                        getScores();
+                        playerArr[turn].style.border = "solid white 5px";
+                        playerArr[turn].removeEventListener("click", throwCard);
+                        slot.removeEventListener("click", getCard);
+                        declareYaniv(turn);
+                        if(yanivBool){ 
+                            // end round
+                        }else{
+                            if(selectedArr.length > 1){
+                                // get another card without creating new event listeners
                             }else{
                                 turn = turn === 3 ?  0 : turn + 1;
                                 newTurn()
@@ -255,10 +249,16 @@ function newTurn(){
                     };
                 }
                 else{
+                    selectedCard.classList.remove("selected");
                     selectedCard.style.border = "solid black 1px";
+                    selectedCard.removeEventListener("click", throwCard);
+                    playerArr[turn].removeEventListener("click", throwCard);
+                    console.log(selectedArr.indexOf(selectedCard));
+                    selectedArr.splice(selectedArr.indexOf(selectedCard), 1);
+                    newTurn();
                 }
             }else{
-             return
+             newTurn();
             };
         };
     
@@ -271,21 +271,27 @@ function declareYaniv(turn){
     
     if(playerDecks[turn].totalValue <= 7){
         buttonDiv.style.display = "block"
+        yanivButton.style.display = "block"
         yanivBool = true;
-    }else{
-        buttonDiv.style.display = "none"
-        yanivBool = false;
     }
     yanivButton.addEventListener("click", () =>{
-        playerDecks[turn].score = playerDecks[turn].totalValue
-        playerDecks[turn].score -= playerDecks[turn].totalValue 
-        console.log(playerDecks.filter(x => playerDecks[x] !== turn))
-        scoreboard();
-    })
+        filterPlayers(turn);
+        declareAssaf(turn)
+    }, {once: true})
     return yanivBool;
 }
 function declareAssaf(turn){
+    const assafButton = document.getElementById("assaf")
+    assafButton.style.display = "block";
+    assafButton.addEventListener("click", () =>{
+        console.log(playerDecks.filter(filterPlayers))
+        declareAssaf(turn)
+    }, {once: true});
 
+}
+function filterPlayers(value, index){
+    return index !== turn
+    
 }
 function scoreboard(){
     const scoreboard = document.getElementById("scoreboard");
@@ -301,9 +307,12 @@ scoreboard()
 
 // if (deck.cards.length === 0){
 //     deck.cards = [...pileDeck.cards];
-//     console.log(deck.cards)
+// 
 // }
 /* left to do: 
-    3. write scores for every player (general)
+    1. yaniv throwing cards rules functions.
+    2. new round after yaniving
+    3. assaf declaration
+    4. write scores for every player (general) (use filter)
     
 */

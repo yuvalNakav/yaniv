@@ -205,7 +205,7 @@ body {
 
 #yaniv,
 #assaf {
-  display: block;
+  display: none;
   margin: 1rem;
   font-size: 3.3rem;
 }

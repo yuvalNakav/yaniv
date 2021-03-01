@@ -235,14 +235,16 @@ function newTurn(){
                         playerArr[turn].style.border = "solid white 5px";
                         playerArr[turn].removeEventListener("click", throwCard);
                         slot.removeEventListener("click", getCard);
-                        declareYaniv(turn);
+                        checkYaniv(turn);
                         if(yanivBool){ 
                             // end round
+                            console.log("tov shoer")
                         }else{
                             if(selectedArr.length > 1){
                                 // get another card without creating new event listeners
                             }else{
                                 turn = turn === 3 ?  0 : turn + 1;
+                                console.log("turn")
                                 newTurn()
                             }
                         }
@@ -265,31 +267,44 @@ function newTurn(){
 }
 getScores();
 
+function checkYaniv(turn){
+    if(playerDecks[turn].totalValue <= 7) declareYaniv(turn);
+}
 function declareYaniv(turn){
     const buttonDiv = document.getElementById("buttons")
     const yanivButton = document.getElementById("yaniv")
+    buttonDiv.style.display = "block"
+    yanivButton.style.display = "block"
+    yanivBool = true;
     
-    if(playerDecks[turn].totalValue <= 7){
-        buttonDiv.style.display = "block"
-        yanivButton.style.display = "block"
-        yanivBool = true;
-    }
     yanivButton.addEventListener("click", () =>{
         filterPlayers(turn);
         declareAssaf(turn)
+        console.log("yaniv")
     }, {once: true})
     return yanivBool;
 }
 function declareAssaf(turn){
-    const assafButton = document.getElementById("assaf")
-    assafButton.style.display = "block";
-    assafButton.addEventListener("click", () =>{
-        console.log(playerDecks.filter(filterPlayers))
-        declareAssaf(turn)
-    }, {once: true});
+    const filterArr = [...playerDecks.filter(filterPlayers)]
+    filterArr.forEach(player => {
+        if(player.totalValue <= playerDecks[turn].totalValue){
+            assafButton.addEventListener("click", () =>{
+                const assafButton = document.getElementById("assaf")
+                assafButton.style.display = "block";
+                return assafBool = true;
+            }, {once: true});
+        }else{
+            console.log("lo hapaam")
+        }
+        if(assafValue){
+           // assaf score rules 
+        } else{
+            // yaniv score rules
+        }
+    })
 
 }
-function filterPlayers(value, index){
+function filterPlayers(value, index, array){
     return index !== turn
     
 }
